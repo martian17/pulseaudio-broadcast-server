@@ -36,7 +36,7 @@ let main = async function() {
     let tbuff;
     if(DEBUG)tbuff = body.add(new TxtBuffer());
     if(DEBUG)tbuff.append("hello");
-    if(DEBUG)tbuff.append(JSON.stringify(navigator.userAgent));
+    if(DEBUG)tbuff.append(navigator.userAgent);
     btn.on("click", () => {
         let ctx = new AudioContext();
         let rate = 44100;
