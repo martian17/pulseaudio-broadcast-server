@@ -67,7 +67,7 @@ let main = async function() {
                 left[i] = vals[i*2];
                 right[i] = vals[i*2+1];
             }
-            if(DEBUG&&PACKETS)tbuff.append(`length: ${len}\nleft: ${JSON.stringify([...left.slice(0,5)])}`);
+            if(DEBUG&&PACKETS)tbuff.append(`length: ${len}<br>left sample: ${JSON.stringify([...left.slice(0,5)])}`);
             
             cnt++;
             /*
@@ -86,7 +86,7 @@ let main = async function() {
             buffer.getChannelData(1).set(right);
             source.buffer = buffer;
             source.connect(ctx.destination);
-            //console.log(ctx.currentTime-startAt)
+            if(DEBUG&&PACKETS)tbuff.append(`dt: ${ctx.currentTime-startAt}`);
             if(Math.abs(ctx.currentTime-startAt) > 0.08){
                 startAt = ctx.currentTime;
             }else{
@@ -95,20 +95,6 @@ let main = async function() {
             source.start(startAt);
             startAt += buffer.duration;
         });
-        /*
-        socket.onmessage = function(e) {
-            let [left,right] = e.data.map(d=>new Float32Array(d));
-            const source = ctx.createBufferSource();
-            const buffer = ctx.createBuffer(2, left.length, rate);
-            buffer.getChannelData(0).set(left);
-            buffer.getChannelData(1).set(rigth);
-            source.buffer = buffer;
-            source.connect(ctx.destination);
-            startAt = Math.max(ctx.currentTime, startAt);
-            source.start(startAt);
-            startAt += buffer.duration;
-        };
-        */
     });
 };
 
